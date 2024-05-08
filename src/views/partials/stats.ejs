@@ -1,0 +1,86 @@
+<div class="d-flex justify-content-center">
+	<div>
+		<h2 class="text-center">Statistics</h2>
+		<div class="d-flex" style="align-items: center; width: fit-content;">
+			<% if (stations) { %>
+			<select class="form-select" style="width: 14rem;margin-right: 1rem;" onchange="handleSelect(this)">
+				<option value="empty">Please select a station</option>
+				<% for (const station of stations) { %>
+					<option value="<%- station.id %>"><%- station.data().displayTitle %></option>
+				<% } %>
+			</select>
+			<script>
+				const defaultStats = { day: "-", week: "-", month: "-" };
+				function handleSelect(elem) {
+					updateStats(defaultStats);
+					if (elem.value != "empty") {
+						fetch("/incident/stats/"+elem.value).then(res => {
+							res.json().then(data=>{
+								updateStats(data.stats);
+							}).catch(()=>{});
+						}).catch(()=>{});
+					}
+				}
+				function updateStats(stats) {
+					const todayContainer = document.querySelector("#stats-today");
+					todayContainer.querySelector(".incidents").innerHTML = stats.day; todayContainer.querySelector(".money").innerHTML = stats.day+"$";
+					const weekContainer = document.querySelector("#stats-week");
+					weekContainer.querySelector(".incidents").innerHTML = stats.week; weekContainer.querySelector(".money").innerHTML = stats.week+"$";
+					const monthContainer = document.querySelector("#stats-month");
+					monthContainer.querySelector(".incidents").innerHTML = stats.month; monthContainer.querySelector(".money").innerHTML = stats.month+"$";
+				}
+			</script>
+			<% } %>
+			<div class="d-flex" style="align-items: center;">
+				<div id="stats-today" class="bg-primary text-white text-center" style="min-width: 8rem; min-height: 6rem;border-radius: .6rem;margin: 1rem">
+					<h6 style="margin-top: 0.5rem;margin-bottom: 0;">Last 24h</h6>
+					<hr style="margin: 0.5rem;">
+					<div class="d-flex justify-content-center">
+						<div style="margin-left: 0.5rem; margin-right: 0.5rem">
+							<h6>Incidents</h6>
+							<h6 class="incidents"><% if (stats) { __append(stats.day) } else { __append("-") } %></h6>
+						</div>
+						<div class="vr"></div>
+						<div style="margin-left: 1rem; margin-right: 1rem">
+							<h6>Money</h6>
+							<h6 class="money"><% if (stats) { __append(stats.day+"$") } else { __append("-$") } %></h6>
+						</div>
+					</div>
+				</div>
+				<div id="stats-week" class="bg-primary text-white text-center" style="min-width: 8rem; min-height: 6rem;border-radius: .6rem;margin: 1rem">
+					<h6 style="margin-top: 0.5rem;margin-bottom: 0;">Last week</h6>
+					<hr style="margin: 0.5rem;">
+					<div class="d-flex justify-content-center">
+						<div style="margin-left: 0.5rem; margin-right: 0.5rem">
+							<h6>Incidents</h6>
+							<h6 class="incidents"><% if (stats) { __append(stats.week) } else { __append("-") } %></h6>
+						</div>
+						<div class="vr"></div>
+						<div style="margin-left: 1rem; margin-right: 1rem">
+							<h6>Money</h6>
+							<h6 class="money"><% if (stats) { __append(stats.week+"$") } else { __append("-$") } %></h6>
+						</div>
+					</div>
+				</div>
+				<div id="stats-month" class="bg-primary text-white text-center" style="min-width: 8rem; min-height: 6rem;border-radius: .6rem;margin: 1rem">
+					<h6 style="margin-top: 0.5rem;margin-bottom: 0;">Last month</h6>
+					<hr style="margin: 0.5rem;">
+					<div class="d-flex justify-content-center">
+						<div style="margin-left: 0.5rem; margin-right: 0.5rem">
+							<h6>Incidents</h6>
+							<h6 class="incidents"><% if (stats) { __append(stats.month) } else { __append("-") } %></h6>
+						</div>
+						<div class="vr"></div>
+						<div style="margin-left: 1rem; margin-right: 1rem">
+							<h6>Money</h6>
+							<h6 class="money"><% if (stats) { __append(stats.month+"$") } else { __append("-$") } %></h6>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<br>
+<hr>
+<br>

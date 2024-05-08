@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Incident Report</title>
+    <%- include("partials/common-css"); %>
+</head>
+<body>
+    <%- include("partials/header") %>
+  <div style="min-width: 26rem; width: 50rem;" class="container">
+    <h2 style="text-align: center;">Incident Report</h2>
+    <!-- <h4 style="text-align: center;">Police station: abc</h4> -->
+    <form method="POST">
+        <!-- Name input -->
+        <div class="form-outline mb-4">
+            <label class="form-label" for="incidentNumber">Incident Number</label>
+          <input <% typeof incident !== "undefined"?(__append(`disabled value="${incident.incidentNumber}"`)):"" %> type="text" id="incidentNumber" name="incidentNumber" class="form-control" placeholder="Leave empty for using timestamp" />
+        </div>
+
+        <h4>Reporting party</h4>
+        <div class="form-outline mb-4">
+            <label class="form-label" for="reportingName">Name</label>
+          <input <% typeof incident !== "undefined"?(__append(`disabled value="${incident.reportingName}"`)):"" %> id="reportingName" name="reportingName" class="form-control" />
+        </div>
+        <div class="form-outline mb-4">
+            <label class="form-label" for="reportingAdderss">Address</label>
+          <input <% typeof incident !== "undefined"?(__append(`disabled value="${incident.reportingAdderss}"`)):"" %> id="reportingAdderss" name="reportingAdderss" class="form-control" />
+        </div>
+        <div class="form-outline mb-4">
+            <label class="form-label" for="reportingContactNumber">Contact Number</label>
+          <input <% typeof incident !== "undefined"?(__append(`disabled value="${incident.reportingContactNumber}"`)):"" %> id="reportingContactNumber" name="reportingContactNumber" class="form-control" />
+        </div>
+        <div class="form-outline mb-4">
+            <label class="form-label" for="reportingAltNumber">Alternate Contact Number</label>
+          <input <% typeof incident !== "undefined"?(__append(`disabled value="${incident.reportingAltNumber}"`)):"" %> id="reportingAltNumber" name="reportingAltNumber" class="form-control" />
+        </div>
+        
+        <h4>Incident Details</h4>
+        <div class="form-outline mb-4">
+            <label class="form-label" for="incidentType">Incident Type: </label>
+            <select <% typeof incident !== "undefined"?(__append(`disabled`)):"" %> id="incidentType" name="incidentType" style="width: 15rem; display: inline" class="form-select">
+                <% if (typeof incidentTypes !== "undefined") {
+                  for (const type of incidentTypes) { %>
+                    <option value="<%= type %>"><%= type %></option>
+                <%
+                  }
+                } else {
+                  %>
+                  <option selected value="<%= incident.incidentType %>"><%= incident.incidentType %></option>
+                  <%
+                }
+                %>
+            </select>
+        </div>
+        <div class="form-outline mb-4">
+            <label class="form-label" for="incidentComplaintAgainst">Complaint against</label>
+          <input <% typeof incident !== "undefined"?(__append(`disabled value="${incident.incidentComplaintAgainst}"`)):"" %> id="incidentComplaintAgainst" name="incidentComplaintAgainst" class="form-control" />
+        </div>
+        <div class="form-outline mb-4">
+            <label class="form-label" for="incidentAddress">Incident Address</label>
+          <input <% typeof incident !== "undefined"?(__append(`disabled value="${incident.incidentAddress}"`)):"" %> id="incidentAddress" name="incidentAddress" class="form-control" />
+        </div>
+        <div class="form-row" style="margin-bottom: 1.5rem;">
+            <div class="d-inline" style="margin-right: 3rem;">
+                <label class="form-label" for="incidentDate">Date</label>
+                <input <% typeof incident !== "undefined"?(__append(`disabled value="${incident.incidentDate}"`)):"" %> class="form-control d-inline" style="width: 10rem;" type="date" name="incidentDate" id="incidentDate">
+            </div>
+            <div class="d-inline">
+                <label class="form-label" for="incidentTime">Time</label>
+                <input <% typeof incident !== "undefined"?(__append(`disabled value="${incident.incidentTime}"`)):"" %> class="form-control d-inline" style="width: 10rem;" type="time" name="incidentTime" id="incidentTime">
+            </div>
+        </div>
+        <div class="form-outline mb-4">
+            <label class="form-label" for="incidentDescription">Description of incident</label>
+            <textarea <% typeof incident !== "undefined"?(__append(`disabled`)):"" %> class="form-control" id="incidentDescription" name="incidentDescription" rows="6"><% typeof incident !== "undefined"?(__append(incident.incidentDescription)):"" %></textarea>
+        </div>
+        <div class="form-outline mb-4">
+            <label class="form-label" for="officerName">Officer Name</label>
+          <input <% typeof incident !== "undefined"?(__append(`disabled value="${incident.officerName}"`)):"" %> id="officerName" name="officerName" class="form-control" />
+        </div>
+        <div class="form-outline mb-4">
+            <label class="form-label" for="officerNumber">Officer Number</label>
+          <input <% typeof incident !== "undefined"?(__append(`disabled value="${incident.officerNumber}"`)):"" %> id="officerNumber" name="officerNumber" class="form-control" />
+        </div>
+        
+        <!-- Submit button -->
+        <div class="d-flex justify-content-center">
+            <input <% typeof incident !== "undefined"?(__append(`disabled`)):"" %> type="submit" class="btn btn-primary btn-block mb-4" />
+        </div>
+    </form>
+  </div>
+    <%- include("partials/common-js") %>
+</body>
+</html>

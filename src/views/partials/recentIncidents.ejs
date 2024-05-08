@@ -1,0 +1,43 @@
+<% if (typeof recentIncidents === "undefined") return; %>
+<div class="d-flex justify-content-center" style="margin-top: 2rem;">
+<table class="table table-striped table-hover border" style="width: 80%; ">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Date</th>
+            <th scope="col">Time</th>
+            <th scope="col">Officer Name</th>
+            <th scope="col">Reporter Name</th>
+        </tr>
+    </thead>
+    <tbody>
+    <% for (let i = 1; i <= recentIncidents.length; i++) { 
+        const incident = recentIncidents[i-1];
+        const myDate = new Date(incident.createdAt);
+        let hours = myDate.getHours();
+        let ampm = " AM";
+        if (hours >= 12)
+            ampm = " PM";
+        if (hours == 0)
+            hours = 12;
+        if (hours > 13)
+            hours -= 12;
+        if (hours < 10) {
+            hours = "0"+hours;
+        }
+        let minutes = myDate.getMinutes();
+        if (minutes < 10) {
+            minutes = "0"+minutes;
+        }
+    %>
+        <tr onclick="window.location = '/incident/<%- incident.uid %>'" style="cursor: pointer;">
+            <th scope="row"><%- i %></th>
+            <td><%- myDate.getFullYear()+" / "+(myDate.getMonth()+1)+" / "+myDate.getDate() %></td>
+            <td><%- hours+":"+minutes+ampm %></td>
+            <td><%- incident.officerName %></td>
+            <td><%- incident.reportingName %></td>
+        </tr>
+    <% } %>
+    </tbody>
+</table>
+</div>
