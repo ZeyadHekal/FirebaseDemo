@@ -1,3 +1,4 @@
+import path from "path";
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInWithEmailAndPassword, Auth } from "firebase/auth";
 import { getFirestore, doc, getDoc, DocumentData} from "firebase/firestore";
